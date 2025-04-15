@@ -1,0 +1,60 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+interface fsr as "FileSystemRepository"
+interface fr as "FileRepository"
+interface f as "File"
+interface c as "Command"
+interface cp as "CommandParameter"
+
+class flg as "Flag"
+cp <|-- f
+cp <|-- flg
+
+class cr as "CommandReader"
+class ce as "CommandExecuter"
+class cli as "CommandLineInterface"
+
+cr -down-> cp
+cr -down-> ce
+ce -down-> fsr
+cli -down-> cr
+
+class t as "Touch"
+class ls as "List"
+class cd as "ChangeDirectory"
+class mkdir as "MakeDirectory"
+class rm as "Remove"
+class pwd as "PrintWorkingDirectory"
+
+c <|-- t
+c <|-- ls
+c <|-- cd
+c <|-- mkdir
+c <|-- rm
+c <|-- pwd
+ce -down-> c
+
+class vfs as "VirtualFileSystem"
+vfs -up-|> fsr
+
+class txtf as "TxtFile"
+class d as "Directory"
+
+f <|-- d
+f <|-- txtf
+
+class txtfr as "TxtFileRepository"
+class dr as "DirectoryRepository"
+
+dr -down-|> fr
+dr -down-> d
+
+txtfr -down-|> fr
+txtfr -down-> txtf
+
+fsr -down-> fr
+fr -down-> f
+
+@enduml
