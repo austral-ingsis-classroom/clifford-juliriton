@@ -20,18 +20,26 @@ class pwd as "PrintWorkingDirectory"
 class txtfr as "TextFileRepository"
 class dr as "DirectoryRepository"
 
-class cr as "CommandReader"
+class cps as "CommandParser"
 class ce as "CommandExecuter"
 class cli as "CommandLineInterface"
+
+interface r as "Result"
+class vc  as "ValidCommand" <<record>>
+class ic as "InvalidCommand" <<record>>
+
+vc .down.|> r
+ic .down.|> r
+cps -left-> r
 
 class txtf as "TextFile"
 class d as "Directory"
 
 class vfs as "VirtualFileSystem"
 
-cli -down-> cr
-cr -right-> cp
-cr -down-> ce
+cli -down-> cps
+cps -right-> cp
+cps -down-> ce
 
 ce -left-> c
 c <|-up- t
