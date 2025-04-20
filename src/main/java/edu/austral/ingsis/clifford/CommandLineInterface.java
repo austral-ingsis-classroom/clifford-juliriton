@@ -5,31 +5,33 @@ public class CommandLineInterface {
   private String lastInput;
   private String lastOutput;
 
-  public CommandLineInterface(){}
+  public CommandLineInterface() {}
 
   public Result input(String input) {
     this.lastInput = input;
-    Result output = CommandParser.parse(input);
+    Result output = CommandValidator.validate(input);
 
     switch (output) {
-      case Result.ValidCommand valid -> this.lastOutput = executeCommand(valid.command());
-      case Result.InvalidCommand invalid -> this.lastOutput = invalid.message();
+      case Result.ValidCommand valid -> {
+        this.lastOutput = executeCommand(valid.command());
+      }
+      case Result.InvalidCommand invalid -> {
+        this.lastOutput = invalid.message();
+      }
     }
 
     return output;
   }
 
-  private String executeCommand(String[] command) {
+  private String executeCommand(ParsedCommand parsedCommand) {
     return null;
   }
 
-
-  public String getLastInput(){
+  public String getLastInput() {
     return lastInput;
   }
 
-  public String getLastOutput(){
+  public String getLastOutput() {
     return lastOutput;
   }
-
 }
