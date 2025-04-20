@@ -7,23 +7,22 @@ public class CommandLineInterface {
 
   public CommandLineInterface() {}
 
-  public Result input(String input) {
+  public String input(String input) {
     this.lastInput = input;
-    Result output = CommandValidator.validate(input);
+    ParsingResult output = CommandValidator.validate(input);
 
     switch (output) {
-      case Result.ValidCommand valid -> {
-        this.lastOutput = executeCommand(valid.command());
+      case ParsingResult.ValidCommandLine valid -> {
+        this.lastOutput = executeCommandLine(valid.command());
       }
-      case Result.InvalidCommand invalid -> {
-        this.lastOutput = invalid.message();
+      case ParsingResult.InvalidCommandLine invalid -> {
+        this.lastOutput = invalid.message(); // Caching
       }
     }
-
-    return output;
+    return lastOutput;
   }
 
-  private String executeCommand(ParsedCommand parsedCommand) {
+  private String executeCommandLine(CommandLine commandLine) {
     return null;
   }
 
