@@ -12,7 +12,7 @@ public class VirtualFileSystem implements FileSystem {
   private Directory currentDirectory;
 
   public VirtualFileSystem() {
-    this.root = new Directory("root", null);
+    this.root = new Directory("/", null);
     this.currentDirectory = root;
   }
 
@@ -28,7 +28,7 @@ public class VirtualFileSystem implements FileSystem {
       currentDirectory = (Directory) child;
       return new FileModificationResult.Success("Moved to " + name);
     }
-    return new FileModificationResult.Error("Directory not found: " + name);
+    return new FileModificationResult.Error("'" + name + "'" + " does not exist");
   }
 
   @Override

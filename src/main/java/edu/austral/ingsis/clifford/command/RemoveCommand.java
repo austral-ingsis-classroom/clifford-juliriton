@@ -5,6 +5,8 @@ import edu.austral.ingsis.clifford.ExecutionResult;
 import edu.austral.ingsis.clifford.file.util.FileModificationResult;
 import edu.austral.ingsis.clifford.file.util.FileSystem;
 
+import java.util.List;
+
 public class RemoveCommand implements Command {
   private final CommandLine commandLine;
 
@@ -19,12 +21,14 @@ public class RemoveCommand implements Command {
 
   @Override
   public boolean isValid() {
-    boolean a = commandLine.getArguments().size() == 1;
-    boolean b = commandLine.getFlags().isEmpty();
-    boolean c = commandLine.getFlags().size() == 1;
-    boolean d = commandLine.getFlags().get(0).equals("--recursive");
-    return a && b || c && d;
+    List<String> args = commandLine.getArguments();
+    List<String> flags = commandLine.getFlags();
+
+    if (args.size() != 1) return false;
+    if (flags.isEmpty()) return true;
+    return flags.size() == 1 && flags.get(0).equals("--recursive");
   }
+
 
   @Override
   public ExecutionResult execute(FileSystem fs) {
@@ -41,17 +45,10 @@ public class RemoveCommand implements Command {
   }
 
   private FileModificationResult removeRecursivelyElseRemove(FileSystem fs, String file) {
-    boolean recursive = commandLine.getArguments().size() == 1
-        && "--recursive".equals(commandLine.getFlags().get(0));
+    boolean recursive = commandLine.getFlags().size() == 1 &&
+        "--recursive".equals(commandLine.getFlags().get(0));
 
-    FileModificationResult result;
-
-    if (recursive) {
-      result = fs.remove(file, true);
-    } else {
-      result = fs.remove(file, false);
-    }
-    return result;
+    return fs.remove(file, recursive);
   }
 
   @Override

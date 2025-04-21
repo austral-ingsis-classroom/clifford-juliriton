@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 public class FileSystemTests {
 
-  private final FileSystemRunner runner = commands -> List.of();
+  private final FileSystemRunner runner = new FileSystemRunnerImpl();
 
   private void executeTest(List<Map.Entry<String, String>> commandsAndResults) {
     final List<String> commands = commandsAndResults.stream().map(Map.Entry::getKey).toList();
@@ -77,7 +77,8 @@ public class FileSystemTests {
             entry("cd ..", "moved to directory '/'"),
             entry("cd horace/jetta", "moved to directory 'jetta'"),
             entry("pwd", "/horace/jetta"),
-            entry("cd /", "moved to directory '/'")));
+            entry("cd /", "moved to directory '/'")
+        ));
   }
 
   @Test
@@ -85,12 +86,13 @@ public class FileSystemTests {
     executeTest(
         List.of(
             entry("mkdir emily", "'emily' directory created"),
-            entry("cd horace", "'horace' directory does not exist")));
+            entry("cd horace", "'horace' directory does not exist")
+        ));
   }
 
   @Test
   void test6() {
-    executeTest(List.of(entry("cd ..", "moved to directory '/'")));
+    executeTest(List.of(entry("cd ..", "moved to directory '/'") ));
   }
 
   @Test
@@ -103,7 +105,8 @@ public class FileSystemTests {
             entry("touch jetta.txt", "'jetta.txt' file created"),
             entry("ls", "emily.txt jetta.txt"),
             entry("rm emily.txt", "'emily.txt' removed"),
-            entry("ls", "jetta.txt")));
+            entry("ls", "jetta.txt")
+        ));
   }
 
   @Test
@@ -118,6 +121,7 @@ public class FileSystemTests {
             entry("ls", "emily emily.txt jetta.txt"),
             entry("rm --recursive emily", "'emily' removed"),
             entry("ls", "emily.txt jetta.txt"),
-            entry("ls --ord=desc", "jetta.txt emily.txt")));
+            entry("ls --ord=desc", "jetta.txt emily.txt")
+        ));
   }
 }

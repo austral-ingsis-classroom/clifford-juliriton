@@ -25,7 +25,7 @@ public class PrintWorkingDirectoryCommand implements Command {
   @Override
   public ExecutionResult execute(FileSystem fs) {
     Directory currentDirectory = fs.getCurrentDirectory();
-    return new ExecutionResult.Success(currentDirectory.getName());
+    return new ExecutionResult.Success("/" + currentDirectory.getName());
   }
 
   @Override
