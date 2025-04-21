@@ -14,20 +14,19 @@ public class CommandLineInterface {
   public String input(String input) {
     ParsingResult parsed = CommandLineParser.parse(input);
 
-    String output = switch (parsed) {
-      case ParsingResult.Failure failure -> failure.message();
-      case ParsingResult.Success success -> {
-        CommandLine commandLine = success.commandLine();
-        ValidationResult validation = CommandLineValidator.validate(commandLine);
-        yield switch (validation) {
-          case ValidationResult.Invalid invalid ->
-              invalid.message();
-          case ValidationResult.Valid valid ->
-              CommandExecutor.execute(fs, valid.command()).getMessage();
+    String output =
+        switch (parsed) {
+          case ParsingResult.Failure failure -> failure.message();
+          case ParsingResult.Success success -> {
+            CommandLine commandLine = success.commandLine();
+            ValidationResult validation = CommandLineValidator.validate(commandLine);
+            yield switch (validation) {
+              case ValidationResult.Invalid invalid -> invalid.message();
+              case ValidationResult.Valid valid ->
+                  CommandExecutor.execute(fs, valid.command()).getMessage();
+            };
+          }
         };
-      }
-    };
     return output;
   }
-
 }

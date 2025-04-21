@@ -10,5 +10,4 @@ public interface Command {
   ExecutionResult execute(FileSystem fs);
 
   String validationError();
-
 }

@@ -29,5 +29,4 @@ public class CommandLineValidator {
     Command command = type.create(commandLine);
     return command;
   }
-
 }

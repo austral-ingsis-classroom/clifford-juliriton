@@ -1,8 +1,6 @@
 package edu.austral.ingsis.clifford;
 
-public sealed interface ParsingResult permits
-    ParsingResult.Success,
-    ParsingResult.Failure {
+public sealed interface ParsingResult permits ParsingResult.Success, ParsingResult.Failure {
 
   static ParsingResult valid(CommandLine commandLine) {
     return new Success(commandLine);
@@ -12,8 +10,7 @@ public sealed interface ParsingResult permits
     return new Failure(message);
   }
 
-  record Success(CommandLine commandLine) implements ParsingResult { }
+  record Success(CommandLine commandLine) implements ParsingResult {}
 
-  record Failure(String message) implements ParsingResult { }
-
+  record Failure(String message) implements ParsingResult {}
 }

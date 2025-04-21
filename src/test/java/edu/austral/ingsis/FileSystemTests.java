@@ -2,6 +2,7 @@ package edu.austral.ingsis;
 
 import static java.util.Map.entry;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
@@ -76,8 +77,7 @@ public class FileSystemTests {
             entry("cd ..", "moved to directory '/'"),
             entry("cd horace/jetta", "moved to directory 'jetta'"),
             entry("pwd", "/horace/jetta"),
-            entry("cd /", "moved to directory '/'")
-        ));
+            entry("cd /", "moved to directory '/'")));
   }
 
   @Test
@@ -85,8 +85,7 @@ public class FileSystemTests {
     executeTest(
         List.of(
             entry("mkdir emily", "'emily' directory created"),
-            entry("cd horace", "'horace' directory does not exist")
-        ));
+            entry("cd horace", "'horace' directory does not exist")));
   }
 
   @Test
@@ -104,8 +103,7 @@ public class FileSystemTests {
             entry("touch jetta.txt", "'jetta.txt' file created"),
             entry("ls", "emily.txt jetta.txt"),
             entry("rm emily.txt", "'emily.txt' removed"),
-            entry("ls", "jetta.txt")
-        ));
+            entry("ls", "jetta.txt")));
   }
 
   @Test
@@ -120,7 +118,6 @@ public class FileSystemTests {
             entry("ls", "emily emily.txt jetta.txt"),
             entry("rm --recursive emily", "'emily' removed"),
             entry("ls", "emily.txt jetta.txt"),
-            entry("ls --ord=desc", "jetta.txt emily.txt")
-        ));
+            entry("ls --ord=desc", "jetta.txt emily.txt")));
   }
 }

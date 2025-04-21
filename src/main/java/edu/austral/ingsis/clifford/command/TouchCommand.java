@@ -28,8 +28,7 @@ public class TouchCommand implements Command {
     return switch (result) {
       case FileModificationResult.Success success ->
           new ExecutionResult.Success("'" + fileName + "' file created");
-      case FileModificationResult.Error error ->
-          new ExecutionResult.Error("Error creating file");
+      case FileModificationResult.Error error -> new ExecutionResult.Error("Error creating file");
     };
   }
 
@@ -37,5 +36,4 @@ public class TouchCommand implements Command {
   public String validationError() {
     return "Invalid file name for touch command";
   }
-
 }

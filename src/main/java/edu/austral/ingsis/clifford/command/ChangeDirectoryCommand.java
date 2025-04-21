@@ -3,8 +3,8 @@ package edu.austral.ingsis.clifford.command;
 import edu.austral.ingsis.clifford.CommandLine;
 import edu.austral.ingsis.clifford.ExecutionResult;
 import edu.austral.ingsis.clifford.file.Directory;
-import edu.austral.ingsis.clifford.file.util.FileSystem;
 import edu.austral.ingsis.clifford.file.util.FileModificationResult;
+import edu.austral.ingsis.clifford.file.util.FileSystem;
 import java.util.List;
 
 public class ChangeDirectoryCommand implements Command {
@@ -52,10 +52,8 @@ public class ChangeDirectoryCommand implements Command {
   private static ExecutionResult tryToCalledDirectory(FileSystem fs, String dirName) {
     FileModificationResult result = fs.changeDirectory(dirName);
     return switch (result) {
-      case FileModificationResult.Success success ->
-          new ExecutionResult.Success(success.message());
-      case FileModificationResult.Error error ->
-          new ExecutionResult.Error(error.message());
+      case FileModificationResult.Success success -> new ExecutionResult.Success(success.message());
+      case FileModificationResult.Error error -> new ExecutionResult.Error(error.message());
     };
   }
 
@@ -77,5 +75,4 @@ public class ChangeDirectoryCommand implements Command {
   public String validationError() {
     return "cd command requires a single directory argument and no flags";
   }
-
 }

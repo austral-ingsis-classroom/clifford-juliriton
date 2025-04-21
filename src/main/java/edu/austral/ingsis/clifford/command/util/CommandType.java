@@ -52,5 +52,4 @@ public enum CommandType {
     }
     return null;
   }
-
 }

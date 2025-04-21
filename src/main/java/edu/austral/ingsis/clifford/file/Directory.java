@@ -1,7 +1,6 @@
 package edu.austral.ingsis.clifford.file;
 
 import edu.austral.ingsis.clifford.file.util.FileModificationResult;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,5 +74,4 @@ public class Directory implements File {
     children.remove(target);
     return new FileModificationResult.Success("Removed: " + name);
   }
-
 }

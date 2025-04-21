@@ -36,5 +36,4 @@ public class MakeDirectoryCommand implements Command {
   public String validationError() {
     return "Invalid directory name for mkdir command : Names cannot contain '/' or spaces";
   }
-
 }

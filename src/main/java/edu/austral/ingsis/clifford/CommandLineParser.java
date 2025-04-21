@@ -17,8 +17,7 @@ public class CommandLineParser {
     for (int i = 1; i < parts.length; i++) {
       if (parts[i].startsWith("--")) {
         flags.add(parts[i]);
-      }
-      else args.add(parts[i]);
+      } else args.add(parts[i]);
     }
     return ParsingResult.valid(new CommandLine(command, flags, args));
   }

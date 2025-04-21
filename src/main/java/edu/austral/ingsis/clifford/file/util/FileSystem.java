@@ -17,5 +17,4 @@ public interface FileSystem {
   FileModificationResult remove(String name, boolean recursive);
 
   List<File> listFiles();
-
 }

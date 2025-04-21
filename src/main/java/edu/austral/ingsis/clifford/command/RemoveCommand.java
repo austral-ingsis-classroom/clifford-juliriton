@@ -27,7 +27,6 @@ public class RemoveCommand implements Command {
     return flags.size() == 1 && flags.get(0).equals("--recursive");
   }
 
-
   @Override
   public ExecutionResult execute(FileSystem fs) {
     String file = commandLine.getArguments().get(0);
@@ -37,14 +36,13 @@ public class RemoveCommand implements Command {
     return switch (result) {
       case FileModificationResult.Success success ->
           new ExecutionResult.Success("'" + file + "' removed");
-      case FileModificationResult.Error error ->
-          new ExecutionResult.Error(error.message());
+      case FileModificationResult.Error error -> new ExecutionResult.Error(error.message());
     };
   }
 
   private FileModificationResult removeRecursivelyElseRemove(FileSystem fs, String file) {
-    boolean recursive = commandLine.getFlags().size() == 1 &&
-        "--recursive".equals(commandLine.getFlags().get(0));
+    boolean recursive =
+        commandLine.getFlags().size() == 1 && "--recursive".equals(commandLine.getFlags().get(0));
 
     return fs.remove(file, recursive);
   }
@@ -53,5 +51,4 @@ public class RemoveCommand implements Command {
   public String validationError() {
     return "Invalid file or directory name for rm command";
   }
-
 }

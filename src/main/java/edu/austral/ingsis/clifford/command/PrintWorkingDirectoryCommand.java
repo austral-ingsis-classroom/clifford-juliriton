@@ -14,8 +14,7 @@ public class PrintWorkingDirectoryCommand implements Command {
 
   @Override
   public boolean isValid() {
-    return commandLine.getFlags().isEmpty()
-        && commandLine.getArguments().isEmpty();
+    return commandLine.getFlags().isEmpty() && commandLine.getArguments().isEmpty();
   }
 
   @Override
@@ -39,5 +38,4 @@ public class PrintWorkingDirectoryCommand implements Command {
   public String validationError() {
     return "pwd command does not take any arguments or flags";
   }
-
 }

@@ -72,5 +72,4 @@ public class VirtualFileSystem implements FileSystem {
   public List<File> listFiles() {
     return new ArrayList<>(currentDirectory.getChildren());
   }
-
 }

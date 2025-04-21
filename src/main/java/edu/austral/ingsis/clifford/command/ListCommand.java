@@ -109,5 +109,4 @@ public class ListCommand implements Command {
   public String validationError() {
     return "Invalid parameters for ls command : ls [--ord=asc|desc]";
   }
-
 }
