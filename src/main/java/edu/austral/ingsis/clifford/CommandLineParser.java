@@ -3,41 +3,29 @@ package edu.austral.ingsis.clifford;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class CommandLineParser {
-
   public static ParsingResult parse(String input) {
     if (isNullOrEmpty(input)) {
-      return new ParsingResult.InvalidCommandLine("Input is empty");
+      return ParsingResult.invalid("Input is empty");
     }
+    String[] parts = split(input);
 
-    String[] commandParts = getParts(input);
-    CommandLine commandLine = buildCommandLine(commandParts);
-    return new ParsingResult.ValidCommandLine(commandLine, "Command Line has correct syntax");
+    String command = parts[0];
+    List<String> flags = new ArrayList<>();
+    List<String> args = new ArrayList<>();
+
+    for (int i = 1; i < parts.length; i++) {
+      if (parts[i].startsWith("--")) flags.add(parts[i]);
+      else args.add(parts[i]);
+    }
+    return ParsingResult.valid(new CommandLine(command, flags, args));
   }
 
-  private static boolean isNullOrEmpty(String input) {
-    return input == null || input.trim().isEmpty();
-  }
-
-  private static String[] getParts(String input) {
+  private static String[] split(String input) {
     return input.trim().split("\\s+");
   }
 
-  private static CommandLine buildCommandLine(String[] commandLineParts) {
-    String command = commandLineParts[0];
-    List<String> flags = new ArrayList<>();
-    List<String> arguments = new ArrayList<>();
-
-    for (int i = 1; i < commandLineParts.length; i++) {
-      String part = commandLineParts[i];
-      if (part.startsWith("--")) {
-        flags.add(part);
-      } else {
-        arguments.add(part);
-      }
-    }
-    return new CommandLine(command, flags, arguments);
+  private static boolean isNullOrEmpty(String input) {
+    return input == null || input.isBlank();
   }
-
 }
