@@ -4,7 +4,6 @@ import edu.austral.ingsis.clifford.CommandLine;
 import edu.austral.ingsis.clifford.ExecutionResult;
 import edu.austral.ingsis.clifford.file.util.FileModificationResult;
 import edu.austral.ingsis.clifford.file.util.FileSystem;
-
 import java.util.List;
 
 public class RemoveCommand implements Command {
@@ -15,17 +14,16 @@ public class RemoveCommand implements Command {
   }
 
   @Override
-  public String name() {
-    return "RM";
-  }
-
-  @Override
   public boolean isValid() {
     List<String> args = commandLine.getArguments();
     List<String> flags = commandLine.getFlags();
 
-    if (args.size() != 1) return false;
-    if (flags.isEmpty()) return true;
+    if (args.size() != 1) {
+      return false;
+    }
+    if (flags.isEmpty()) {
+      return true;
+    }
     return flags.size() == 1 && flags.get(0).equals("--recursive");
   }
 
@@ -55,4 +53,5 @@ public class RemoveCommand implements Command {
   public String validationError() {
     return "Invalid file or directory name for rm command";
   }
+
 }

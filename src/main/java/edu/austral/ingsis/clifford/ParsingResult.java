@@ -12,10 +12,8 @@ public sealed interface ParsingResult permits
     return new Failure(message);
   }
 
-  record Success(CommandLine commandLine) implements ParsingResult {
-  }
+  record Success(CommandLine commandLine) implements ParsingResult { }
 
-  record Failure(String message) implements ParsingResult {
-  }
+  record Failure(String message) implements ParsingResult { }
 
 }

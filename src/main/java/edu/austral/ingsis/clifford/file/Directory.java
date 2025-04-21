@@ -1,6 +1,7 @@
 package edu.austral.ingsis.clifford.file;
 
 import edu.austral.ingsis.clifford.file.util.FileModificationResult;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,9 +33,10 @@ public class Directory implements File {
 
   @Override
   public String getPath() {
-    if (parent == null) return "/";
-    String parentPath = parent.getPath();
-    return (parentPath.endsWith("/") ? parentPath : parentPath + "/") + name;
+    if (parent == null) {
+      return "/";
+    }
+    return parent.getPath() + "/" + name;
   }
 
   public File getChild(String name) {
@@ -65,13 +67,13 @@ public class Directory implements File {
     }
 
     if (target.isDirectory()) {
-      Directory dir = (Directory) target;
-      if (!recursive && !dir.getChildren().isEmpty()) {
-        return new FileModificationResult.Error("Directory not empty: " + name);
+      if (!recursive) {
+        return new FileModificationResult.Error("cannot remove '" + name + "', is a directory");
       }
     }
 
     children.remove(target);
     return new FileModificationResult.Success("Removed: " + name);
   }
+
 }

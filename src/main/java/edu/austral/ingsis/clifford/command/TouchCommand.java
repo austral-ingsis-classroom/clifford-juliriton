@@ -13,11 +13,6 @@ public class TouchCommand implements Command {
   }
 
   @Override
-  public String name() {
-    return "TOUCH";
-  }
-
-  @Override
   public boolean isValid() {
     String fileName = commandLine.getArguments().get(0);
     return commandLine.getArguments().size() == 1
@@ -33,7 +28,8 @@ public class TouchCommand implements Command {
     return switch (result) {
       case FileModificationResult.Success success ->
           new ExecutionResult.Success("'" + fileName + "' file created");
-      case FileModificationResult.Error error -> new ExecutionResult.Error("Error creating file");
+      case FileModificationResult.Error error ->
+          new ExecutionResult.Error("Error creating file");
     };
   }
 
@@ -41,4 +37,5 @@ public class TouchCommand implements Command {
   public String validationError() {
     return "Invalid file name for touch command";
   }
+
 }

@@ -1,13 +1,12 @@
 package edu.austral.ingsis.clifford.command;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
 import edu.austral.ingsis.clifford.CommandLine;
 import edu.austral.ingsis.clifford.ExecutionResult;
 import edu.austral.ingsis.clifford.file.File;
-import java.util.List;
 import edu.austral.ingsis.clifford.file.util.FileSystem;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class ListCommand implements Command {
   private final CommandLine commandLine;
@@ -17,17 +16,17 @@ public class ListCommand implements Command {
   }
 
   @Override
-  public String name() {
-    return "LS";
-  }
-
-  @Override
   public boolean isValid() {
     List<String> flags = commandLine.getFlags();
     List<String> args = commandLine.getArguments();
 
-    if (!args.isEmpty()) return false;
-    if (flags.isEmpty()) return true;
+    if (!args.isEmpty()) {
+      return false;
+    }
+
+    if (flags.isEmpty()) {
+      return true;
+    }
 
     if (flags.size() == 1 && flags.get(0).startsWith("--ord")) {
       String flag = flags.get(0);
@@ -72,7 +71,9 @@ public class ListCommand implements Command {
     StringBuilder result = new StringBuilder();
     for (int i = 0; i < names.size(); i++) {
       result.append(names.get(i));
-      if (i < names.size() - 1) result.append(" ");
+      if (i < names.size() - 1) {
+        result.append(" ");
+      }
     }
     return result.toString();
   }
@@ -87,8 +88,12 @@ public class ListCommand implements Command {
       if (arg.equals("--ord")) {
       } else if (arg.startsWith("--ord=")) {
         String value = arg.substring("--ord=".length());
-        if (value.equals("asc")) sortAsc = true;
-        if (value.equals("desc")) sortDesc = true;
+        if (value.equals("asc")) {
+          sortAsc = true;
+        }
+        if (value.equals("desc")) {
+          sortDesc = true;
+        }
       }
     }
 
@@ -104,4 +109,5 @@ public class ListCommand implements Command {
   public String validationError() {
     return "Invalid parameters for ls command : ls [--ord=asc|desc]";
   }
+
 }

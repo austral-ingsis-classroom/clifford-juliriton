@@ -22,13 +22,29 @@ public class VirtualFileSystem implements FileSystem {
   }
 
   @Override
-  public FileModificationResult changeDirectory(String name) {
-    File child = currentDirectory.getChild(name);
-    if (child != null && child.isDirectory()) {
-      currentDirectory = (Directory) child;
-      return new FileModificationResult.Success("Moved to " + name);
+  public FileModificationResult changeDirectory(String path) {
+    Directory target = path.startsWith("/") ? root : currentDirectory;
+
+    String[] parts = path.split("/");
+    for (String part : parts) {
+      if (part.isEmpty() || ".".equals(part)) continue;
+      if ("..".equals(part)) {
+        if (target.getParent() != null) {
+          target = target.getParent();
+        } else {
+          return new FileModificationResult.Error("No parent directory available");
+        }
+      } else {
+        File child = target.getChild(part);
+        if (child != null && child.isDirectory()) {
+          target = (Directory) child;
+        } else {
+          return new FileModificationResult.Error("'" + path + "' directory does not exist");
+        }
+      }
     }
-    return new FileModificationResult.Error("'" + name + "'" + " does not exist");
+    currentDirectory = target;
+    return new FileModificationResult.Success("moved to directory '" + target.getName() + "'");
   }
 
   @Override
@@ -56,4 +72,5 @@ public class VirtualFileSystem implements FileSystem {
   public List<File> listFiles() {
     return new ArrayList<>(currentDirectory.getChildren());
   }
+
 }

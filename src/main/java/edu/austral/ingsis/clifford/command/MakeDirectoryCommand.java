@@ -13,11 +13,6 @@ public class MakeDirectoryCommand implements Command {
   }
 
   @Override
-  public String name() {
-    return "MKDIR";
-  }
-
-  @Override
   public boolean isValid() {
     return commandLine.getFlags().isEmpty()
         && commandLine.getArguments().size() == 1
@@ -33,8 +28,7 @@ public class MakeDirectoryCommand implements Command {
     return switch (result) {
       case FileModificationResult.Success success ->
           new ExecutionResult.Success("'" + directory + "' directory created");
-      case FileModificationResult.Error error ->
-          new ExecutionResult.Error(error.message());
+      case FileModificationResult.Error error -> new ExecutionResult.Error(error.message());
     };
   }
 
@@ -42,4 +36,5 @@ public class MakeDirectoryCommand implements Command {
   public String validationError() {
     return "Invalid directory name for mkdir command : Names cannot contain '/' or spaces";
   }
+
 }

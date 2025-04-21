@@ -5,7 +5,6 @@ import edu.austral.ingsis.clifford.ExecutionResult;
 import edu.austral.ingsis.clifford.file.Directory;
 import edu.austral.ingsis.clifford.file.util.FileSystem;
 import edu.austral.ingsis.clifford.file.util.FileModificationResult;
-
 import java.util.List;
 
 public class ChangeDirectoryCommand implements Command {
@@ -16,20 +15,21 @@ public class ChangeDirectoryCommand implements Command {
   }
 
   @Override
-  public String name() {
-    return "CD";
-  }
-
-  @Override
   public boolean isValid() {
     List<String> args = commandLine.getArguments();
 
-    if (args.size() != 1) return false;
+    if (args.size() != 1) {
+      return false;
+    }
 
-    if (!commandLine.getFlags().isEmpty()) return false;
+    if (!commandLine.getFlags().isEmpty()) {
+      return false;
+    }
 
     String dir = args.get(0);
-    if ("..".equals(dir) || ".".equals(dir)) return true;
+    if ("..".equals(dir) || ".".equals(dir)) {
+      return true;
+    }
 
     return true;
   }
@@ -53,16 +53,21 @@ public class ChangeDirectoryCommand implements Command {
     FileModificationResult result = fs.changeDirectory(dirName);
     return switch (result) {
       case FileModificationResult.Success success ->
-          new ExecutionResult.Success("Moved to directory: '" + dirName + "'");
-      case FileModificationResult.Error error -> new ExecutionResult.Error(error.message());
+          new ExecutionResult.Success(success.message());
+      case FileModificationResult.Error error ->
+          new ExecutionResult.Error(error.message());
     };
   }
 
   private ExecutionResult tryToParentDirectory(FileSystem fs) {
+    if ("/".equals(fs.getCurrentDirectory().getName())) {
+      return new ExecutionResult.Success("moved to directory '/'");
+    }
+
     Directory parent = fs.getCurrentDirectory().getParent();
     if (parent != null) {
       fs.changeDirectory(parent.getName());
-      return new ExecutionResult.Success("Moved to parent directory");
+      return new ExecutionResult.Success("moved to directory '/'");
     } else {
       return new ExecutionResult.Error("No parent directory available");
     }
@@ -72,4 +77,5 @@ public class ChangeDirectoryCommand implements Command {
   public String validationError() {
     return "cd command requires a single directory argument and no flags";
   }
+
 }

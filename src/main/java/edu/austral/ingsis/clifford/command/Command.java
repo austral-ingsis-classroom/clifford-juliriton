@@ -5,8 +5,6 @@ import edu.austral.ingsis.clifford.file.util.FileSystem;
 
 public interface Command {
 
-  String name();
-
   boolean isValid();
 
   ExecutionResult execute(FileSystem fs);
