@@ -30,8 +30,7 @@ public class ChangeDirectoryCommand implements Command {
     return switch (result) {
       case FileModificationResult.Success success ->
           new ExecutionResult.Success("Moved to directory: '" + dirName + "'");
-      case FileModificationResult.Error error ->
-          new ExecutionResult.Error(error.message());
+      case FileModificationResult.Error error -> new ExecutionResult.Error(error.message());
     };
   }
 

@@ -2,37 +2,58 @@ package edu.austral.ingsis.clifford.file.util;
 
 import edu.austral.ingsis.clifford.file.Directory;
 import edu.austral.ingsis.clifford.file.File;
-
+import edu.austral.ingsis.clifford.file.SimpleFile;
+import java.util.ArrayList;
 import java.util.List;
 
 public class VirtualFileSystem implements FileSystem {
-  @Override
-  public Directory getCurrentDirectory() {
-    return null;
+
+  private final Directory root;
+  private Directory currentDirectory;
+
+  public VirtualFileSystem() {
+    this.root = new Directory("root", null);
+    this.currentDirectory = root;
   }
 
   @Override
-  public FileModificationResult changeDirectory(String path) {
-    return null;
+  public Directory getCurrentDirectory() {
+    return currentDirectory;
+  }
+
+  @Override
+  public FileModificationResult changeDirectory(String name) {
+    File child = currentDirectory.getChild(name);
+    if (child != null && child.isDirectory()) {
+      currentDirectory = (Directory) child;
+      return new FileModificationResult.Success("Moved to " + name);
+    }
+    return new FileModificationResult.Error("Directory not found: " + name);
   }
 
   @Override
   public FileModificationResult createFile(String name) {
-    return null;
+    if (currentDirectory.getChild(name) != null) {
+      return new FileModificationResult.Error("File already exists: " + name);
+    }
+    return currentDirectory.addChild(new SimpleFile(name, currentDirectory));
   }
 
   @Override
   public FileModificationResult createDirectory(String name) {
-    return null;
+    if (currentDirectory.getChild(name) != null) {
+      return new FileModificationResult.Error("Directory already exists: " + name);
+    }
+    return currentDirectory.addChild(new Directory(name, currentDirectory));
   }
 
   @Override
   public FileModificationResult remove(String name, boolean recursive) {
-    return null;
+    return currentDirectory.removeChild(name, recursive);
   }
 
   @Override
   public List<File> listFiles() {
-    return List.of();
+    return new ArrayList<>(currentDirectory.getChildren());
   }
 }
