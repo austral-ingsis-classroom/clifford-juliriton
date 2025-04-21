@@ -1,11 +1,21 @@
 package edu.austral.ingsis.clifford;
 
 public sealed interface ParsingResult permits
-    ParsingResult.ValidCommandLine,
-    ParsingResult.InvalidCommandLine {
+    ParsingResult.Success,
+    ParsingResult.Failure {
 
-  record ValidCommandLine(CommandLine command, String message) implements ParsingResult {}
-  record InvalidCommandLine(String message) implements ParsingResult {}
+  static ParsingResult valid(CommandLine commandLine) {
+    return new Success(commandLine);
+  }
 
+  static ParsingResult invalid(String message) {
+    return new Failure(message);
+  }
+
+  record Success(CommandLine commandLine) implements ParsingResult {
+  }
+
+  record Failure(String message) implements ParsingResult {
+  }
 
 }

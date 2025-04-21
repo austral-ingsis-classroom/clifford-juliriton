@@ -1,7 +1,8 @@
 package edu.austral.ingsis.clifford.command.util;
 
-import edu.austral.ingsis.clifford.command.*;
-import edu.austral.ingsis.clifford.*;
+import edu.austral.ingsis.clifford.CommandLine;
+import edu.austral.ingsis.clifford.ValidationResult;
+import edu.austral.ingsis.clifford.command.Command;
 
 public class CommandLineValidator {
   public static ValidationResult validate(CommandLine commandLine) {
