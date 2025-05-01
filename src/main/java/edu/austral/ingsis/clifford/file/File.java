@@ -1,12 +1,32 @@
 package edu.austral.ingsis.clifford.file;
 
-public interface File {
+class File implements FileSystemItem {
+  private final String name;
+  private final Directory parent;
 
-  String getName();
+  public File(String name, Directory parent) {
+    this.name = name;
+    this.parent = parent;
+  }
 
-  Directory getParent();
+  @Override
+  public String getName() {
+    return name;
+  }
 
-  boolean isDirectory();
+  @Override
+  public boolean isDirectory() {
+    return false;
+  }
 
-  String getPath();
+  @Override
+  public String getPath() {
+    return parent.getPath() + "/" + name;
+  }
+
+  @Override
+  public Directory getParent() {
+    return parent;
+  }
+
 }
