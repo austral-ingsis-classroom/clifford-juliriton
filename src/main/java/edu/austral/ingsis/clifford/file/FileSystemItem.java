@@ -1,6 +1,6 @@
 package edu.austral.ingsis.clifford.file;
 
-interface FileSystemItem {
+public interface FileSystemItem {
   String getName();
 
   boolean isDirectory();

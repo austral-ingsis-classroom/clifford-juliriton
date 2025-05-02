@@ -1,20 +1,28 @@
 package edu.austral.ingsis.clifford.file.util;
 
 import edu.austral.ingsis.clifford.file.Directory;
-import edu.austral.ingsis.clifford.file.File;
-import java.util.List;
+
+/*
+
+Actua como receiver. Sabe realizar las operaciones de un FileSystem asociado a un comando
+que fue llamado (buisness logic), pero no decide quien realiza la operacion, ni porque
+ni cuando
+
+ */
 
 public interface FileSystem {
 
+  String listItems(String orderOption);
+
+  String changeDirectory(String path);
+
+  FileSystem createFile(String fileName);
+
+  FileSystem createDirectory(String dirName);
+
+  FileSystem removeItem(String path, boolean recursive);
+
+  String getCurrentPath();
+
   Directory getCurrentDirectory();
-
-  FileModificationResult changeDirectory(String path);
-
-  FileModificationResult createFile(String name);
-
-  FileModificationResult createDirectory(String name);
-
-  FileModificationResult remove(String name, boolean recursive);
-
-  List<File> listFiles();
 }
