@@ -1,6 +1,6 @@
 package edu.austral.ingsis.clifford.command;
 
-import edu.austral.ingsis.clifford.command.result.ExecutionResult;
+import edu.austral.ingsis.clifford.result.ExecutionResult;
 
 /*
 

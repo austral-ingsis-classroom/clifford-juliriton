@@ -1,20 +1,27 @@
 package edu.austral.ingsis.clifford.command;
 
-import edu.austral.ingsis.clifford.command.result.ExecutionResult;
-import edu.austral.ingsis.clifford.file.util.FileSystem;
+import edu.austral.ingsis.clifford.file.FileSystem;
+import edu.austral.ingsis.clifford.result.ExecutionResult;
+import edu.austral.ingsis.clifford.result.FileModificationResult;
 
 public class CdCommand implements Command {
+  private final String path;
   private final FileSystem fs;
-  private final String targetPath;
 
-  public CdCommand(String targetPath, FileSystem fs) {
-    this.targetPath = targetPath;
+  public CdCommand(String path, FileSystem fs) {
+    this.path = path;
     this.fs = fs;
   }
 
   @Override
   public ExecutionResult execute() {
-    String newPath = fs.changeDirectory(targetPath);
-    return new ExecutionResult.Success(fs, String.format("moved to directory: '%s'", newPath));
+    FileModificationResult result = fs.changeDirectory(path);
+
+    return switch (result) {
+      case FileModificationResult.Success success ->
+          new ExecutionResult.Success(success.fs(), success.output());
+      case FileModificationResult.Failure failure ->
+          new ExecutionResult.Failure(failure.message());
+    };
   }
 }

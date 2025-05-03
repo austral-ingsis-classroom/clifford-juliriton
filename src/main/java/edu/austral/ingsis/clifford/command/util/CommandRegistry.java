@@ -7,8 +7,8 @@ de clases preexistentes
 
 */
 
+import edu.austral.ingsis.clifford.command.factory.CommandFactory;
 import edu.austral.ingsis.clifford.command.validator.CommandValidator;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -21,8 +21,8 @@ public class CommandRegistry {
   public CommandRegistry() {}
 
   public static void register(String commandIdentifier,
-                                     CommandFactory factory,
-                                     CommandValidator validator) {
+                              CommandFactory factory,
+                              CommandValidator validator) {
     FACTORIES.put(commandIdentifier, factory);
     VALIDATORS.put(commandIdentifier, validator);
   }
@@ -35,16 +35,8 @@ public class CommandRegistry {
     return FACTORIES.get(commandName);
   }
 
-  public static Collection<CommandFactory> getAllFactories() {
-    return new ArrayList<>(FACTORIES.values());
-  }
-
   public static CommandValidator getValidator(String commandName) {
     return VALIDATORS.get(commandName);
-  }
-
-  public static Collection<CommandValidator> getAllValidators() {
-    return new ArrayList<>(VALIDATORS.values());
   }
 
 }

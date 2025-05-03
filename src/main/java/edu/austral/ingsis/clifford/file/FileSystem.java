@@ -1,6 +1,6 @@
-package edu.austral.ingsis.clifford.file.util;
+package edu.austral.ingsis.clifford.file;
 
-import edu.austral.ingsis.clifford.file.Directory;
+import edu.austral.ingsis.clifford.result.FileModificationResult;
 
 /*
 
@@ -12,9 +12,7 @@ ni cuando
 
 public interface FileSystem {
 
-  String listItems(String orderOption);
-
-  String changeDirectory(String path);
+  FileModificationResult changeDirectory(String path);
 
   FileSystem createFile(String fileName);
 

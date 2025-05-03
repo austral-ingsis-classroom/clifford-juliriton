@@ -1,19 +1,12 @@
 package edu.austral.ingsis.clifford.command.util;
 
-import edu.austral.ingsis.clifford.command.result.ParsingResult;
-
+import edu.austral.ingsis.clifford.result.ParsingResult;
 import java.util.ArrayList;
 import java.util.Collection;
 
-/*
-
-
-
-*/
-
 public class CommandLineParser {
 
-  public static ParsingResult parseCommandLine(String input) {
+  public static ParsingResult parse(String input) {
     if (isNullOrEmpty(input)) {
       return new ParsingResult.Failure("Invalid input");
     }

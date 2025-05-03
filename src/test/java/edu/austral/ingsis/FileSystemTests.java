@@ -2,7 +2,6 @@ package edu.austral.ingsis;
 
 import static java.util.Map.entry;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
@@ -121,3 +120,24 @@ public class FileSystemTests {
             entry("ls --ord=desc", "jetta.txt emily.txt")));
   }
 }
+
+/*
+
+  MODIFICAR CODIGO ES COSTOSO
+
+ SRP -> UN SOLO MOTIVO DE CAMBIO
+ OCP -> AGREGAR CODIGO SIN MODIFICAR LO ANTERIOR
+ DIP -> MODULES SHOULD DEPEND ON ABSTRACTIONS NOT ON LOW LEVEL MODULES
+        ABSTRACTION SHOULD NOT DEPEND ON IMPLEMENTATION DETAILS, BUT THE OTHER WAY AROUND
+
+        DEPENDER -> SABER QUIEN SOY
+
+        CHECKOUT PAGE -> ORDER CONTROLLER -> PAYMENT SERVIC -> (MERC. PAGO, CREDITCARD)
+
+        MERC PAGO Y CREDIT CARD SABEN QUE ES EL CONTROLLER, PERO EL CONTROLLER NO
+
+        DISOCIA EL FLUJO DE EJECUCION DE LAS DEPENDENCIAS DE COMPILACION
+
+        LO DE MAS ARRIBA DEBE SER LO QUE MAS CAMBIA, ASI NO SE DESTABLIZA LA TORRE
+
+*/

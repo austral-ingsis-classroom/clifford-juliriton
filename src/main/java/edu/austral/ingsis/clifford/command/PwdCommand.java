@@ -1,7 +1,7 @@
 package edu.austral.ingsis.clifford.command;
 
-import edu.austral.ingsis.clifford.command.result.ExecutionResult;
-import edu.austral.ingsis.clifford.file.util.FileSystem;
+import edu.austral.ingsis.clifford.result.ExecutionResult;
+import edu.austral.ingsis.clifford.file.FileSystem;
 
 public class PwdCommand implements Command {
   private final FileSystem fs;

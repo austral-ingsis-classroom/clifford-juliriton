@@ -1,6 +1,6 @@
 package edu.austral.ingsis.clifford.file;
 
-class File implements FileSystemItem {
+public class File implements FileSystemItem {
   private final String name;
   private final Directory parent;
 
@@ -21,12 +21,15 @@ class File implements FileSystemItem {
 
   @Override
   public String getPath() {
-    return parent.getPath() + "/" + name;
+    String parentPath = parent.getPath();
+    if (parentPath.equals("/")) {
+      return parentPath + name;
+    }
+    return parentPath + "/" + name;
   }
 
   @Override
   public Directory getParent() {
     return parent;
   }
-
 }

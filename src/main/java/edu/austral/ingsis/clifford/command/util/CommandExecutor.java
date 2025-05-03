@@ -1,10 +1,11 @@
 package edu.austral.ingsis.clifford.command.util;
 
-import edu.austral.ingsis.clifford.command.result.ExecutionResult;
-import edu.austral.ingsis.clifford.command.result.ValidationResult;
 import edu.austral.ingsis.clifford.command.Command;
+import edu.austral.ingsis.clifford.command.factory.CommandFactory;
 import edu.austral.ingsis.clifford.command.validator.CommandValidator;
-import edu.austral.ingsis.clifford.file.util.FileSystem;
+import edu.austral.ingsis.clifford.file.FileSystem;
+import edu.austral.ingsis.clifford.result.ExecutionResult;
+import edu.austral.ingsis.clifford.result.ValidationResult;
 import java.util.Collection;
 
 /*
@@ -26,19 +27,20 @@ public class CommandExecutor {
                                         Collection<String> args,
                                         Collection<String> flags) {
 
-    CommandValidator validator = CommandRegistry.getValidator(commandName);
-    ValidationResult validation = validator.validate(args, flags);
+    if (CommandRegistry.exists(commandName)) {
+      CommandValidator validator = CommandRegistry.getValidator(commandName);
+      ValidationResult validation = validator.validate(args, flags);
 
-    switch (validation) {
-      case ValidationResult.Failure failure -> {
-        return new ExecutionResult.Failure(failure.message());
-      }
-      case ValidationResult.Success success -> {
-        CommandFactory factory = CommandRegistry.getFactory(commandName);
-        Command command = factory.create(flags, args, fs);
-        return command.execute();
-      }
+      return switch (validation) {
+        case ValidationResult.Failure failure -> new ExecutionResult.Failure(failure.message());
+        case ValidationResult.Success success -> {
+          CommandFactory factory = CommandRegistry.getFactory(commandName);
+          Command command = factory.create(flags, args, fs);
+          yield command.execute();
+        }
+      };
     }
+    return new ExecutionResult.Failure("unknown command '" + commandName + "'");
   }
-
 }
+

@@ -1,9 +1,11 @@
 package edu.austral.ingsis.clifford.command.validator;
 
-import edu.austral.ingsis.clifford.command.result.ValidationResult;
+import edu.austral.ingsis.clifford.result.ValidationResult;
 import java.util.Collection;
 
 public class RmCommandValidator implements CommandValidator {
+
+  public RmCommandValidator() {}
 
   @Override
   public ValidationResult validate(Collection<String> args, Collection<String> flags) {

@@ -1,4 +1,4 @@
-package edu.austral.ingsis.clifford.command.result;
+package edu.austral.ingsis.clifford.result;
 
 import edu.austral.ingsis.clifford.command.util.CommandParts;
 

@@ -1,24 +1,26 @@
 package edu.austral.ingsis.clifford.file;
 
-import edu.austral.ingsis.clifford.Result;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Comparator;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-class Directory implements FileSystemItem {
+public class Directory implements FileSystemItem {
   private final String name;
-  private final Map<String, FileSystemItem> children;
-  private final List<FileSystemItem> childrenByCreationOrder;
   private final Directory parent;
+  private final Map<String, FileSystemItem> items;
+  private final List<String> itemsOrder;
 
-  public Directory(String name, Directory parent) {
+  public Directory(String name,
+                   Directory parent,
+                   Map<String, FileSystemItem> items,
+                   List<String> itemsOrder) {
     this.name = name;
     this.parent = parent;
-    this.children = new HashMap<>();
-    this.childrenByCreationOrder = new ArrayList<>();
+    this.items = items;
+    this.itemsOrder = itemsOrder;
   }
 
   @Override
@@ -33,10 +35,14 @@ class Directory implements FileSystemItem {
 
   @Override
   public String getPath() {
-    if (parent == null || parent.getName().isEmpty()) {
-      return "/" + name;
+    if (parent == null) {
+      return "/";
     }
-    return parent.getPath() + "/" + name;
+    String parentPath = parent.getPath();
+    if (parentPath.equals("/")) {
+      return parentPath + name;
+    }
+    return parentPath + "/" + name;
   }
 
   @Override
@@ -44,61 +50,55 @@ class Directory implements FileSystemItem {
     return parent;
   }
 
-  public Result addItem(FileSystemItem item) {
-    if (item == null) {
-      return new Result.Failure("Cannot add null item.");
-    }
-    if (children.containsKey(item.getName())) {
-      return new Result.Failure("Item with the same name already exists.");
-    }
-    children.put(item.getName(), item);
-    childrenByCreationOrder.add(item);
-    return new Result.Success(item.getName() + "was added.");
+  public FileSystemItem getItem(String name) {
+    return items.get(name);
   }
 
-  public Result removeItem(String name) {
-    if (name == null || !children.containsKey(name)) {
-      return new Result.Failure("Item not found: " + name);
+  public Directory addItem(FileSystemItem item) {
+    Map<String, FileSystemItem> newItems = new HashMap<>(items);
+    List<String> newOrder = new ArrayList<>(itemsOrder);
+
+    if (newItems.containsKey(item.getName())) {
+      return this;
     }
-    FileSystemItem item = children.remove(name);
-    childrenByCreationOrder.remove(item);
-    return new Result.Success("Item removed: " + name);
+
+    newItems.put(item.getName(), item);
+    newOrder.add(item.getName());
+    return new Directory(this.name, this.parent, newItems, newOrder);
   }
 
-  public Result getItem(String name) {
-    if (name == null || !children.containsKey(name)) {
-      return new Result.Failure("Item not found: " + name);
+  public Directory removeItem(String name) {
+    if (!items.containsKey(name)) {
+      return this;
     }
-    return new Result.Value<>(children.get(name));
+
+    Map<String, FileSystemItem> newItems = new HashMap<>(items);
+    List<String> newOrder = new ArrayList<>(itemsOrder);
+
+    newItems.remove(name);
+    newOrder.remove(name);
+
+    return new Directory(this.name, parent, newItems, newOrder);
+  }
+
+  public boolean containsItem(String name) {
+    return items.containsKey(name);
   }
 
   public Collection<String> listItems() {
-    Collection<String> result = new ArrayList<>();
-    for (FileSystemItem item : childrenByCreationOrder) {
-      result.add(item.getName());
-    }
-    return result;
+    return new ArrayList<>(itemsOrder);
   }
 
   public Collection<String> listItemsAscending() {
-    List<String> result = new ArrayList<>();
-    for (FileSystemItem item : childrenByCreationOrder) {
-      result.add(item.getName());
-    }
-    result.sort(Comparator.naturalOrder());
-    return result;
+    List<String> sorted = new ArrayList<>(itemsOrder);
+    Collections.sort(sorted);
+    return sorted;
   }
 
   public Collection<String> listItemsDescending() {
-    List<String> result = new ArrayList<>();
-    for (FileSystemItem item : childrenByCreationOrder) {
-      result.add(item.getName());
-    }
-    result.sort(Comparator.reverseOrder());
-    return result;
+    List<String> sorted = new ArrayList<>(itemsOrder);
+    sorted.sort(Collections.reverseOrder());
+    return sorted;
   }
 
-  public Collection<FileSystemItem> getItems() {
-    return List.copyOf(childrenByCreationOrder);
-  }
 }

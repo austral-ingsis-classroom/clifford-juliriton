@@ -1,8 +1,7 @@
-package edu.austral.ingsis.clifford.command.util;
+package edu.austral.ingsis.clifford.command.factory;
 
 import edu.austral.ingsis.clifford.command.Command;
-import edu.austral.ingsis.clifford.file.util.FileSystem;
-
+import edu.austral.ingsis.clifford.file.FileSystem;
 import java.util.Collection;
 
 public interface CommandFactory {
