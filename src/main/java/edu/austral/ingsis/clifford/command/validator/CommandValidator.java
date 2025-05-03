@@ -5,5 +5,4 @@ import java.util.Collection;
 
 public interface CommandValidator {
   ValidationResult validate(Collection<String> args, Collection<String> flags);
-
 }

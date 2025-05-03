@@ -13,10 +13,8 @@ public class Directory implements FileSystemItem {
   private final Map<String, FileSystemItem> items;
   private final List<String> itemsOrder;
 
-  public Directory(String name,
-                   Directory parent,
-                   Map<String, FileSystemItem> items,
-                   List<String> itemsOrder) {
+  public Directory(
+      String name, Directory parent, Map<String, FileSystemItem> items, List<String> itemsOrder) {
     this.name = name;
     this.parent = parent;
     this.items = items;
@@ -100,5 +98,4 @@ public class Directory implements FileSystemItem {
     sorted.sort(Collections.reverseOrder());
     return sorted;
   }
-
 }

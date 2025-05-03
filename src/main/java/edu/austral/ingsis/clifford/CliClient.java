@@ -23,10 +23,8 @@ public class CliClient {
   }
 
   private String executeCommand(CommandParts parts) {
-    ExecutionResult result = CommandExecutor.execute(fs,
-                                                     parts.getCommandName(),
-                                                     parts.getArgs(),
-                                                     parts.getFlags());
+    ExecutionResult result =
+        CommandExecutor.execute(fs, parts.getCommandName(), parts.getArgs(), parts.getFlags());
     return handleExecutionResult(result);
   }
 

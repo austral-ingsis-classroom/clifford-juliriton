@@ -23,5 +23,4 @@ public class CdCommandValidator implements CommandValidator {
 
     return new ValidationResult.Success();
   }
-
 }

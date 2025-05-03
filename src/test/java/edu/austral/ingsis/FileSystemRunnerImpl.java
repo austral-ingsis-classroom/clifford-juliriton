@@ -26,26 +26,13 @@ import java.util.List;
 public class FileSystemRunnerImpl implements FileSystemRunner {
 
   static {
-    CommandRegistry.register("mkdir",
-        new MkdirCommandFactory(),
-        new MkdirCommandValidator());
-    CommandRegistry.register("ls",
-        new LsCommandFactory(),
-        new LsCommandValidator());
-    CommandRegistry.register("cd",
-        new CdCommandFactory(),
-        new CdCommandValidator());
-    CommandRegistry.register("pwd",
-        new PwdCommandFactory(),
-        new PwdCommandValidator());
-    CommandRegistry.register("touch",
-        new TouchCommandFactory(),
-        new TouchCommandValidator());
-    CommandRegistry.register("rm",
-        new RmCommandFactory(),
-        new RmCommandValidator());
+    CommandRegistry.register("mkdir", new MkdirCommandFactory(), new MkdirCommandValidator());
+    CommandRegistry.register("ls", new LsCommandFactory(), new LsCommandValidator());
+    CommandRegistry.register("cd", new CdCommandFactory(), new CdCommandValidator());
+    CommandRegistry.register("pwd", new PwdCommandFactory(), new PwdCommandValidator());
+    CommandRegistry.register("touch", new TouchCommandFactory(), new TouchCommandValidator());
+    CommandRegistry.register("rm", new RmCommandFactory(), new RmCommandValidator());
   }
-
 
   @Override
   public List<String> executeCommands(List<String> commands) {
@@ -59,12 +46,9 @@ public class FileSystemRunnerImpl implements FileSystemRunner {
         case ParsingResult.Failure failure -> results.add(failure.message());
         case ParsingResult.Success success -> {
           CommandParts command = success.commandParts();
-          ExecutionResult result = CommandExecutor.execute(
-              fileSystem,
-              command.getCommandName(),
-              command.getArgs(),
-              command.getFlags()
-          );
+          ExecutionResult result =
+              CommandExecutor.execute(
+                  fileSystem, command.getCommandName(), command.getArgs(), command.getFlags());
 
           switch (result) {
             case ExecutionResult.Success s -> {

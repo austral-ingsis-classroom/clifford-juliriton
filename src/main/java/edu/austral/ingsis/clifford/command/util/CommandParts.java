@@ -7,9 +7,7 @@ public class CommandParts {
   private final Collection<String> args;
   private final Collection<String> flags;
 
-  public CommandParts(String commandName,
-                      Collection<String> args,
-                      Collection<String> flags) {
+  public CommandParts(String commandName, Collection<String> args, Collection<String> flags) {
     this.commandName = commandName;
     this.args = args;
     this.flags = flags;
@@ -26,5 +24,4 @@ public class CommandParts {
   public Collection<String> getFlags() {
     return flags;
   }
-
 }

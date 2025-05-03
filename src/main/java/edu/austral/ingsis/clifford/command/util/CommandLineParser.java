@@ -29,10 +29,8 @@ public class CommandLineParser {
     return input.trim().split("\\s+");
   }
 
-  private static CommandParts build(String[] parts,
-                                    String commandName,
-                                    Collection<String> args,
-                                    Collection<String> flags) {
+  private static CommandParts build(
+      String[] parts, String commandName, Collection<String> args, Collection<String> flags) {
 
     for (int i = 1; i < parts.length; i++) {
       String p = parts[i];
@@ -45,7 +43,4 @@ public class CommandLineParser {
 
     return new CommandParts(commandName, args, flags);
   }
-
 }
-
-

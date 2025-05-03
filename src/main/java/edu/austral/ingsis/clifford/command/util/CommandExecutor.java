@@ -22,10 +22,8 @@ Invoca al comando
 
 public class CommandExecutor {
 
-  public static ExecutionResult execute(FileSystem fs,
-                                        String commandName,
-                                        Collection<String> args,
-                                        Collection<String> flags) {
+  public static ExecutionResult execute(
+      FileSystem fs, String commandName, Collection<String> args, Collection<String> flags) {
 
     if (CommandRegistry.exists(commandName)) {
       CommandValidator validator = CommandRegistry.getValidator(commandName);
@@ -43,4 +41,3 @@ public class CommandExecutor {
     return new ExecutionResult.Failure("unknown command '" + commandName + "'");
   }
 }
-

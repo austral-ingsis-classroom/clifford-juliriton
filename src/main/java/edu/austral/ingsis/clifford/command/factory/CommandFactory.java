@@ -7,5 +7,4 @@ import java.util.Collection;
 public interface CommandFactory {
 
   Command create(Collection<String> flags, Collection<String> args, FileSystem fs);
-
 }

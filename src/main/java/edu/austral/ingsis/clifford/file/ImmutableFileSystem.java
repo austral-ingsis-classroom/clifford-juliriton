@@ -52,8 +52,7 @@ public class ImmutableFileSystem implements FileSystem {
     }
 
     ImmutableFileSystem newFs = new ImmutableFileSystem(root, newDir);
-    return new FileModificationResult.Success(newFs,
-        "moved to directory '" + outputName + "'");
+    return new FileModificationResult.Success(newFs, "moved to directory '" + outputName + "'");
   }
 
   private FileModificationResult.Success stayAtRoot() {
@@ -69,7 +68,6 @@ public class ImmutableFileSystem implements FileSystem {
       ImmutableFileSystem newFs = new ImmutableFileSystem(root, parent);
       return new FileModificationResult.Success(newFs, "moved to directory '/'");
     }
-
   }
 
   private Directory resolveAbsolutePath(String path) {
@@ -194,8 +192,7 @@ public class ImmutableFileSystem implements FileSystem {
       return root;
     }
 
-    String[] parts = path.startsWith("/") ?
-        path.substring(1).split("/") : path.split("/");
+    String[] parts = path.startsWith("/") ? path.substring(1).split("/") : path.split("/");
     Directory pointer = root;
 
     for (String part : parts) {
@@ -236,5 +233,4 @@ public class ImmutableFileSystem implements FileSystem {
 
     return rebuildPath(parent, updatedParent);
   }
-
 }

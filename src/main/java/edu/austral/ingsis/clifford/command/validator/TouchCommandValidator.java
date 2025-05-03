@@ -29,5 +29,4 @@ public class TouchCommandValidator implements CommandValidator {
 
     return new ValidationResult.Success();
   }
-
 }

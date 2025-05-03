@@ -17,8 +17,8 @@ public class LsCommandValidator implements CommandValidator {
       if (flag.startsWith("--ord=")) {
         String value = flag.substring("--ord=".length()).toLowerCase();
         if (!value.equals("asc") && !value.equals("desc")) {
-          return new ValidationResult.Failure("wrong use of ls command flag --ord: "
-              + "'--ord', '--ord=asc' o '--ord=desc'.");
+          return new ValidationResult.Failure(
+              "wrong use of ls command flag --ord: " + "'--ord', '--ord=asc' o '--ord=desc'.");
         }
       } else {
         return new ValidationResult.Failure("unknown flag: " + flag + " for ls command");
@@ -27,5 +27,4 @@ public class LsCommandValidator implements CommandValidator {
 
     return new ValidationResult.Success();
   }
-
 }

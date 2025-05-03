@@ -7,5 +7,4 @@ public sealed interface ParsingResult {
   record Success(CommandParts commandParts) implements ParsingResult {}
 
   record Failure(String message) implements ParsingResult {}
-
 }

@@ -7,5 +7,4 @@ public sealed interface ExecutionResult permits ExecutionResult.Success, Executi
   record Success(FileSystem fs, String output) implements ExecutionResult {}
 
   record Failure(String message) implements ExecutionResult {}
-
 }

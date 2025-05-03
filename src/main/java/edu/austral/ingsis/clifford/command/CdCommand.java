@@ -20,8 +20,7 @@ public class CdCommand implements Command {
     return switch (result) {
       case FileModificationResult.Success success ->
           new ExecutionResult.Success(success.fs(), success.output());
-      case FileModificationResult.Failure failure ->
-          new ExecutionResult.Failure(failure.message());
+      case FileModificationResult.Failure failure -> new ExecutionResult.Failure(failure.message());
     };
   }
 }
